@@ -1,0 +1,69 @@
+﻿<Window x:Class="WPF_HomeLibrary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_HomeLibrary"
+        mc:Ignorable="d"
+        Title="Library" Height="450" Width="800">
+    <Grid Background="AliceBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" >
+            <StackPanel DockPanel.Dock="Bottom"  Orientation="Horizontal" MinHeight="70" 
+                            HorizontalAlignment="Center">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="50" />
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="Background" Value="Lavender" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border CornerRadius="6" Background="Lavender" BorderThickness="0">
+                                            <ContentPresenter  ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Command="{Binding AddCommand}">+</Button>
+                    <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedBook}">-</Button>
+                    <Button Command="{Binding SaveCommand}">Save</Button>
+                    <Button Command="{Binding OpenCommand}">Open</Button>
+                </StackPanel>
+            <ListBox  Margin="10" Background="LavenderBlush" BorderThickness="0" ItemsSource="{Binding AllBooks}" SelectedItem="{Binding SelectedBook}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock FontSize="15" Text="{Binding Path=Name}"/>
+                            <TextBlock FontWeight="UltraLight" FontStyle="Italic" Text="{Binding Path=Author}"/>
+                            <TextBlock Text="{Binding Path=Year}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+        <UniformGrid Grid.Column="1" Columns="2" Rows="5" DataContext="{Binding SelectedBook}">
+            <TextBlock FontSize="15" FontWeight="DemiBold" Margin="20,30,20,0"  Text="Название" />
+            <TextBox MaxLength="250" Cursor="AppStarting" Margin="0,20,20,20" HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="15" FontWeight="DemiBold" Margin="20,30,20,0" Text="Автор" />
+            <TextBox MaxLength="250" Cursor="AppStarting" Margin="0,20,20,20"  HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="15" FontWeight="DemiBold" Margin="20,30,20,0" Text="Издательство" />
+            <TextBox MaxLength="250" Cursor="AppStarting" Margin="0,20,20,20"  HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Publishing, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="15" FontWeight="DemiBold" Margin="20,30,20,0" Text="Год" />
+            <TextBox MaxLength="250" Cursor="AppStarting" Margin="0,20,20,20"  HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="15" FontWeight="DemiBold" Margin="20,30,20,0" Text="Количество страниц" />
+            <TextBox MaxLength="250" Cursor="AppStarting" Margin="0,20,20,20"  HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Page, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </UniformGrid>
+    </Grid>
+</Window>
